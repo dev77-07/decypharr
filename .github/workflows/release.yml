@@ -16,8 +16,8 @@ permissions:
   packages: write
 
 env:
-  REGISTRY_GHCR: ghcr.io/sirrobot01/decypharr
-  REGISTRY_HUB: docker.io/cy01/blackhole
+  REGISTRY_GHCR: ghcr.io/dev77-07/decypharr
+  REGISTRY_HUB: docker.io/yeahme49/blackhole
   LDFLAGS_PKG: github.com/sirrobot01/decypharr/pkg/version
 
 jobs:
