@@ -4,6 +4,12 @@ on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch: # Enables the manual run button
+    inputs:
+      reason:
+        description: 'Reason for running'
+        required: false
+        default: 'Manual testing'
 
 permissions:
   contents: write
