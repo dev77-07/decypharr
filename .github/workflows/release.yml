@@ -208,6 +208,17 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            ${{ env.REGISTRY_GHCR }}
+            ${{ env.REGISTRY_HUB }}
+          tags: |
+            type=ref,event=branch
+            type=raw,value=latest
+
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
@@ -217,11 +228,7 @@ jobs:
           build-args: |
             VERSION=${{ needs.prepare.outputs.version }}
             CHANNEL=${{ needs.prepare.outputs.channel }}
-          tags: |
-            ${{ env.REGISTRY_GHCR }}:${{ github.ref_name }}
-            ${{ env.REGISTRY_GHCR }}:latest
-            ${{ env.REGISTRY_HUB }}:${{ github.ref_name }}
-            ${{ env.REGISTRY_HUB }}:latest
+          tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
